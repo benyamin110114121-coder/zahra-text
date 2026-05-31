@@ -1,35 +1,64 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل ادمین</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    @font-face {
+      font-family: vazir;
+      src: url(Vazir-Bold.ttf);
+      font-style: normal;
+      font-weight: normal;
+    }
+
+    body {
+      font-family: vazir!important;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Tahoma, sans-serif;
       background: #f0f2f5;
       padding: 30px 20px;
     }
+
     .box {
       background: white;
       border-radius: 12px;
       padding: 30px;
       max-width: 500px;
       margin: 0 auto 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-    h2 { margin-bottom: 20px; color: #333; }
-    input, textarea {
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input,
+    textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 12px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      font-family: Tahoma, sans-serif;
+      font-family: vazir;
       font-size: 0.95rem;
     }
-    textarea { height: 100px; resize: vertical; }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
     button {
       width: 100%;
       padding: 11px;
@@ -39,11 +68,24 @@
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      font-family: Tahoma, sans-serif;
+      font-family:vazir;
     }
-    button:hover { background: #4338ca; }
-    #status { margin-top: 10px; font-size: 0.9rem; min-height: 20px; }
-    #post-list { list-style: none; margin-top: 10px; }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    #status {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      min-height: 20px;
+    }
+
+    #post-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
     #post-list li {
       display: flex;
       justify-content: space-between;
@@ -53,7 +95,11 @@
       font-size: 0.9rem;
       color: #333;
     }
-    #post-list li:last-child { border-bottom: none; }
+
+    #post-list li:last-child {
+      border-bottom: none;
+    }
+
     .del-btn {
       width: auto;
       padding: 5px 12px;
@@ -61,10 +107,18 @@
       font-size: 0.8rem;
       margin-right: 10px;
     }
-    .del-btn:hover { background: #dc2626; }
-    #login-section, #admin-section { display: block; }
+
+    .del-btn:hover {
+      background: #dc2626;
+    }
+
+    #login-section,
+    #admin-section {
+      display: block;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- صفحه لاگین -->
@@ -182,4 +236,5 @@
     }
   </script>
 </body>
+
 </html>
