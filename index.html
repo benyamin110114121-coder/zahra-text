@@ -5,16 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>صفحه اصلی</title>
+  <link rel="shortcut icon" href="bg.jpg" type="image/x-icon">
   <style>
+    
     @font-face {
       font-family: vazir;
       src: url(Vazir-Bold.ttf);
       font-style: normal;
       font-weight: normal;
     }
-    body{
-      font-family: vazir!important;
+
+    body {
+      font-family: vazir !important;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,12 +29,17 @@
       font-family: vazir;
       background: #f0f2f5;
       padding: 30px 20px;
+      background: url(bg.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 30px;
-      color: #333;
+      color: #dbe4ff;
     }
 
     #cards {
@@ -42,10 +51,10 @@
     }
 
     .card {
-      background: rgb(248, 248, 248);
+      background: rgb(65, 68, 100);
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(213, 213, 213, 0.1);
       overflow: auto;
       width: 280px;
       height: 150px;
@@ -55,19 +64,19 @@
       font-size: 1.1rem;
       margin-bottom: 10px;
       overflow: auto;
-      color: #222;
+      color: #b5b5b5;
     }
 
     .card p {
       font-size: 0.95rem;
-      color: #555;
+      color: #d0d0d0;
       line-height: 1.7;
       text-wrap: wrap;
     }
 
     .loading {
       text-align: center;
-      color: #888;
+      color: #ffffff;
       grid-column: 1/-1;
       padding: 40px;
     }
@@ -75,7 +84,7 @@
 </head>
 
 <body>
-  <h1>🌕دلنوشته های زهرا🌕</h1>
+  <h1>⭐آنایاد | Anayad⭐</h1>
   <div id="cards">
     <p class="loading">در حال بارگذاری...</p>
   </div>
