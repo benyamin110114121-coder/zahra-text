@@ -152,90 +152,99 @@
     <h2>کارت‌های موجود</h2>
     <ul id="post-list"></ul>
   </div>
-<script>
-  const API_URL = "https://api.npoint.io/b209f73bec0dc1cce895";
-  const ADMIN_PASS = '2e4r4sd';
-  let posts = [];
 
-  function doLogin() {
-    const val = document.getElementById('pass-input').value;
-    if (val === ADMIN_PASS) {
-      document.getElementById('login-section').style.display = 'none';
-      document.getElementById('admin-section').style.display = 'block';
-      document.getElementById('list-section').style.display = 'block';
-      loadPosts();
-    } else {
-      document.getElementById('login-error').textContent = 'رمز اشتباه است';
+  <script>
+    const BIN_ID = '6a1b25b321f9ee59d29e770e';
+    const API_KEY = '$2a$10$SfM1tRVwgK2pRkyJ73yCpeLmwW9QZVgCXd2qFKds9..0rJ4/m.IGG';
+    const ADMIN_PASS = '2e4r4sd';
+
+    let posts = [];
+
+    function doLogin() {
+      const val = document.getElementById('pass-input').value;
+      if (val === ADMIN_PASS) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-section').style.display = 'block';
+        document.getElementById('list-section').style.display = 'block';
+        loadPosts();
+      } else {
+        document.getElementById('login-error').textContent = 'رمز اشتباه است';
+      }
     }
-  }
 
-  document.getElementById('pass-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-
-  async function loadPosts() {
-    const res = await fetch(API_URL);
-    const data = await res.json();
-    posts = data.posts || [];
-    renderList();
-  }
-
-  async function savePosts() {
-    await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ posts })
+    // با Enter هم لاگین کنه
+    document.getElementById('pass-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
     });
-  }
 
-  async function addPost() {
-    const title = document.getElementById('new-title').value.trim();
-    const content = document.getElementById('new-content').value.trim();
-    const status = document.getElementById('status');
-
-    if (!title || !content) {
-      status.style.color = 'red';
-      status.textContent = 'عنوان و متن را پر کنید';
-      return;
+    async function loadPosts() {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+        headers: { 'X-Master-Key': API_KEY }
+      });
+      const data = await res.json();
+      posts = data.record.posts || [];
+      renderList();
     }
 
-    posts.push({ title, content });
-    await savePosts();
-
-    document.getElementById('new-title').value = '';
-    document.getElementById('new-content').value = '';
-    status.style.color = 'green';
-    status.textContent = 'کارت با موفقیت اضافه شد ✓';
-    renderList();
-
-    setTimeout(() => status.textContent = '', 3000);
-  }
-
-  async function deletePost(index) {
-    if (!confirm('این کارت حذف شود؟')) return;
-    posts.splice(index, 1);
-    await savePosts();
-    renderList();
-  }
-
-  function renderList() {
-    const list = document.getElementById('post-list');
-    if (posts.length === 0) {
-      list.innerHTML = '<li>هنوز کارتی وجود ندارد</li>';
-      return;
+    async function savePosts() {
+      await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': API_KEY
+        },
+        body: JSON.stringify({ posts })
+      });
     }
-    list.innerHTML = [...posts].reverse().map((post, i) => {
-      const realIndex = posts.length - 1 - i;
-      return `
-        <li>
-          <span>${post.title}</span>
-          <button class="del-btn" onclick="deletePost(${realIndex})">حذف</button>
-        </li>
-      `;
-    }).join('');
-  }
-</script>
 
+    async function addPost() {
+      const title = document.getElementById('new-title').value.trim();
+      const content = document.getElementById('new-content').value.trim();
+      const status = document.getElementById('status');
+
+      if (!title || !content) {
+        status.style.color = 'red';
+        status.textContent = 'عنوان و متن را پر کنید';
+        return;
+      }
+
+      posts.push({ title, content });
+      await savePosts();
+
+      document.getElementById('new-title').value = '';
+      document.getElementById('new-content').value = '';
+      status.style.color = 'green';
+      status.textContent = 'کارت با موفقیت اضافه شد ✓';
+      renderList();
+
+      setTimeout(() => status.textContent = '', 3000);
+    }
+
+    async function deletePost(index) {
+      if (!confirm('این کارت حذف شود؟')) return;
+      posts.splice(index, 1);
+      await savePosts();
+      renderList();
+    }
+
+    function renderList() {
+      const list = document.getElementById('post-list');
+      if (posts.length === 0) {
+        list.innerHTML = '<li>هنوز کارتی وجود ندارد</li>';
+        return;
+      }
+      // جدیدترین بالا
+      list.innerHTML = [...posts].reverse().map((post, i) => {
+        const realIndex = posts.length - 1 - i;
+        return `
+          <li>
+            <span>${post.title}</span>
+            <button class="del-btn" onclick="deletePost(${realIndex})">حذف</button>
+          </li>
+        `;
+      }).join('');
+    }
+  </script>
 </body>
 
 </html>

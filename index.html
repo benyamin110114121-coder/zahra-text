@@ -110,13 +110,16 @@
   </div>
 
   <script>
-    const API_URL = "https://api.npoint.io/b209f73bec0dc1cce895";
+    const BIN_ID = '6a1b25b321f9ee59d29e770e';
+    const API_KEY = '$2a$10$SfM1tRVwgK2pRkyJ73yCpeLmwW9QZVgCXd2qFKds9..0rJ4/m.IGG';
 
     async function loadPosts() {
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+          headers: { 'X-Master-Key': API_KEY }
+        });
         const data = await res.json();
-        renderCards(data.posts || []);
+        renderCards(data.record.posts || []);
       } catch (e) {
         document.getElementById('cards').innerHTML = '<p class="loading">خطا در بارگذاری</p>';
       }
@@ -130,16 +133,15 @@
       }
       const reversed = [...posts].reverse();
       container.innerHTML = reversed.map(post => `
-      <div class="card">
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-      </div>
-    `).join('');
+        <div class="card">
+          <h2>${post.title}</h2>
+          <p>${post.content}</p>
+        </div>
+      `).join('');
     }
 
     loadPosts();
   </script>
-
 </body>
 
 </html>
