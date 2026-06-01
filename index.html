@@ -130,15 +130,16 @@
       }
       const reversed = [...posts].reverse();
       container.innerHTML = reversed.map(post => `
-        <div class="card">
-          <h2>${post.title}</h2>
-          <p>${post.content}</p>
-        </div>
-      `).join('');
+      <div class="card">
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+      </div>
+    `).join('');
     }
 
     loadPosts();
   </script>
+
 </body>
 
 </html>
