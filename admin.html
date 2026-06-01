@@ -157,6 +157,7 @@
     const API_URL = "https://api.npoint.io/b209f73bec0dc1cce895";
     const ADMIN_PASS = '2e4r4sd';
     let posts = [];
+
     function doLogin() {
       const val = document.getElementById('pass-input').value;
       if (val === ADMIN_PASS) {
@@ -169,27 +170,21 @@
       }
     }
 
-    // با Enter هم لاگین کنه
     document.getElementById('pass-input').addEventListener('keydown', e => {
       if (e.key === 'Enter') doLogin();
     });
 
     async function loadPosts() {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-        headers: { 'X-Master-Key': API_KEY }
-      });
+      const res = await fetch(API_URL);
       const data = await res.json();
-      posts = data.record.posts || [];
+      posts = data.posts || [];
       renderList();
     }
 
     async function savePosts() {
-      await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
-        },
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ posts })
       });
     }
@@ -230,7 +225,6 @@
         list.innerHTML = '<li>هنوز کارتی وجود ندارد</li>';
         return;
       }
-      // جدیدترین بالا
       list.innerHTML = [...posts].reverse().map((post, i) => {
         const realIndex = posts.length - 1 - i;
         return `
