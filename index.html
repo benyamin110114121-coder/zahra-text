@@ -7,7 +7,6 @@
   <title>صفحه اصلی</title>
   <link rel="shortcut icon" href="bg.jpg" type="image/x-icon">
   <style>
-    
     @font-face {
       font-family: vazir;
       src: url(Vazir-Bold.ttf);
@@ -18,6 +17,22 @@
     body {
       font-family: vazir !important;
     }
+
+    /* فقط برای Chrome/Edge/Safari */
+    .card::-webkit-scrollbar {
+      width: 3px;
+      margin-left: 10px;
+    }
+
+    .card::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .card::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+
 
     * {
       box-sizing: border-box;
@@ -56,8 +71,12 @@
       padding: 20px;
       box-shadow: 0 2px 8px rgba(213, 213, 213, 0.1);
       overflow: auto;
-      width: 280px;
-      height: 150px;
+      height: 170px;
+    }
+
+    .card::-webkit-scrollbar-track {
+      margin-top: 10px;
+      margin-bottom: 7px;
     }
 
     .card h2 {
@@ -71,7 +90,7 @@
       font-size: 0.95rem;
       color: #d0d0d0;
       line-height: 1.7;
-        white-space: pre-wrap;
+      white-space: pre-wrap;
       text-wrap: wrap;
     }
 
