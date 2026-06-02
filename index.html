@@ -38,6 +38,11 @@
       border-radius: 10px;
     }
 
+    .card::-webkit-scrollbar-track {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
 
     * {
       box-sizing: border-box;
@@ -79,11 +84,6 @@
       height: 170px;
     }
 
-    .card::-webkit-scrollbar-track {
-      margin-top: 10px;
-      margin-bottom: 7px;
-    }
-
     .card h2 {
       font-size: 1.1rem;
       margin-bottom: 10px;
@@ -109,14 +109,28 @@
 </head>
 
 <body>
-  <h1>⭐آنایاد | Anayad⭐</h1>
+  <h1>
+    <a target="_blank" href="https://delnevesht.vercel.app/admin.html" style="text-decoration: none ; color: rgb(255, 255, 255); border: 2px solid rgba(255, 218, 218, 0.783); padding: 10px; border-radius: 20px; background-color: rgba(56, 56, 56, 0.559);">
+      ⭐آنایاد | Anayad⭐
+    </a> 
+  </h1>
   <div id="cards">
     <p class="loading">در حال بارگذاری...</p>
   </div>
-
   <script>
     const BIN_ID = '6a1b25b321f9ee59d29e770e';
     const API_KEY = '$2a$10$SfM1tRVwgK2pRkyJ73yCpeLmwW9QZVgCXd2qFKds9..0rJ4/m.IGG';
+
+    const badWords = ['کیر', 'کص', 'احمق', 'خنگ']; // کلمات بد رو اینجا اضافه کن
+
+    function censor(text) {
+      let result = text;
+      badWords.forEach(word => {
+        const regex = new RegExp(word, 'gi');
+        result = result.replace(regex, '####');
+      });
+      return result;
+    }
 
     async function loadPosts() {
       try {
@@ -139,14 +153,15 @@
       const reversed = [...posts].reverse();
       container.innerHTML = reversed.map(post => `
         <div class="card">
-          <h2>${post.title}</h2>
-          <p>${post.content}</p>
+          <h2>${censor(post.title)}</h2>
+          <p>${censor(post.content)}</p>
         </div>
       `).join('');
     }
 
     loadPosts();
   </script>
+
 </body>
 
 </html>

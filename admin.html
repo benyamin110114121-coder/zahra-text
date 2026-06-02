@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>پنل ادمین</title>
-  <link rel="shortcut icon" href="bg.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="bg.jpg" type="image/x-icon" />
   <style>
     @font-face {
       font-family: vazir;
@@ -130,57 +130,65 @@
 </head>
 
 <body>
-
   <!-- صفحه لاگین -->
   <div class="box" id="login-section">
     <h2>ورود به پنل</h2>
-    <input type="password" id="pass-input" placeholder="رمز عبور">
+    <input type="password" id="pass-input" placeholder="رمز عبور" />
     <button onclick="doLogin()">ورود</button>
-    <p id="login-error" style="color:red; margin-top:10px; font-size:0.9rem;"></p>
+    <p id="login-error" style="color: red; margin-top: 10px; font-size: 0.9rem"></p>
   </div>
 
   <!-- پنل ادمین -->
-  <div class="box" id="admin-section" style="display:none;">
+  <div class="box" id="admin-section" style="display: none">
     <h2>افزودن کارت جدید</h2>
-    <input type="text" id="new-title" placeholder="عنوان کارت">
+    <input type="text" id="new-title" placeholder="عنوان کارت" />
     <textarea id="new-content" placeholder="متن کارت"></textarea>
     <button onclick="addPost()">افزودن کارت</button>
     <p id="status"></p>
   </div>
 
-  <div class="box" id="list-section" style="display:none;">
+  <div class="box" id="list-section" style="display: none">
     <h2>کارت‌های موجود</h2>
     <ul id="post-list"></ul>
   </div>
 
   <script>
-    const BIN_ID = '6a1b25b321f9ee59d29e770e';
-    const API_KEY = '$2a$10$SfM1tRVwgK2pRkyJ73yCpeLmwW9QZVgCXd2qFKds9..0rJ4/m.IGG';
-    const ADMIN_PASS = '2e4r4sd';
+    const BIN_ID = "6a1b25b321f9ee59d29e770e";
+    const API_KEY =
+      "$2a$10$SfM1tRVwgK2pRkyJ73yCpeLmwW9QZVgCXd2qFKds9..0rJ4/m.IGG";
+    const ADMIN_PASS = "2e4r4sd";
 
     let posts = [];
-
     function doLogin() {
-      const val = document.getElementById('pass-input').value;
+      const val = document.getElementById("pass-input").value;
       if (val === ADMIN_PASS) {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-section').style.display = 'block';
-        document.getElementById('list-section').style.display = 'block';
+        document.getElementById("login-section").style.display =
+          "none";
+        document.getElementById("admin-section").style.display =
+          "block";
+        document.getElementById("list-section").style.display =
+          "block";
         loadPosts();
       } else {
-        document.getElementById('login-error').textContent = 'رمز اشتباه است';
+        document.getElementById("login-error").textContent =
+          "رمز اشتباه است";
       }
     }
 
     // با Enter هم لاگین کنه
-    document.getElementById('pass-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') doLogin();
-    });
+    document
+      .getElementById("pass-input")
+      .addEventListener("keydown", (e) => {
+        if (e.key === "Enter") doLogin();
+      });
 
     async function loadPosts() {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-        headers: { 'X-Master-Key': API_KEY }
-      });
+      const res = await fetch(
+        `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,
+        {
+          headers: { "X-Master-Key": API_KEY },
+        },
+      );
       const data = await res.json();
       posts = data.record.posts || [];
       renderList();
@@ -188,61 +196,65 @@
 
     async function savePosts() {
       await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY,
         },
-        body: JSON.stringify({ posts })
+        body: JSON.stringify({ posts }),
       });
     }
 
     async function addPost() {
-      const title = document.getElementById('new-title').value.trim();
-      const content = document.getElementById('new-content').value.trim();
-      const status = document.getElementById('status');
+      const title = document.getElementById("new-title").value.trim();
+      const content = document
+        .getElementById("new-content")
+        .value.trim();
+      const status = document.getElementById("status");
 
       if (!title || !content) {
-        status.style.color = 'red';
-        status.textContent = 'عنوان و متن را پر کنید';
+        status.style.color = "red";
+        status.textContent = "عنوان و متن را پر کنید";
         return;
       }
 
       posts.push({ title, content });
       await savePosts();
 
-      document.getElementById('new-title').value = '';
-      document.getElementById('new-content').value = '';
-      status.style.color = 'green';
-      status.textContent = 'کارت با موفقیت اضافه شد ✓';
+      document.getElementById("new-title").value = "";
+      document.getElementById("new-content").value = "";
+      status.style.color = "green";
+      status.textContent = "کارت با موفقیت اضافه شد ✓";
       renderList();
 
-      setTimeout(() => status.textContent = '', 3000);
+      setTimeout(() => (status.textContent = ""), 3000);
     }
 
     async function deletePost(index) {
-      if (!confirm('این کارت حذف شود؟')) return;
+      if (!confirm("این کارت حذف شود؟")) return;
       posts.splice(index, 1);
       await savePosts();
       renderList();
     }
-
     function renderList() {
-      const list = document.getElementById('post-list');
+      const list = document.getElementById("post-list");
       if (posts.length === 0) {
-        list.innerHTML = '<li>هنوز کارتی وجود ندارد</li>';
+        list.innerHTML = "<li>هنوز کارتی وجود ندارد</li>";
         return;
       }
       // جدیدترین بالا
-      list.innerHTML = [...posts].reverse().map((post, i) => {
-        const realIndex = posts.length - 1 - i;
-        return `
+      list.innerHTML = [...posts]
+        .reverse()
+        .map((post, i) => {
+          const realIndex = posts.length - 1 - i;
+          return `
           <li>
             <span>${post.title}</span>
             <button class="del-btn" onclick="deletePost(${realIndex})">حذف</button>
           </li>
         `;
-      }).join('');
+        })
+        .join("");
     }
   </script>
 </body>
